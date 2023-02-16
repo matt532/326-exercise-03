@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <title>Exercise #5 Histogram</title>
+  </head>
+  <script>
+    // To run this code, simply right-click on this file from
+    // VSCode and select "Open with Live Server". You will need
+    // to have the Live Server extension installed.
+
+    // TODO #1:
+    function decoderRing(rotation) {
+      const obj = {
+        encodeMap: {},
+        decodeMap: {},
+      };
+
+      // (1) Initialize encodeMap & (2) decodeMap
+      for (let i = 0; i < 26; i++) {
+        // YOU DO THIS PART
+        obj.encodeMap[String.fromCharCode(97 + i)] = String.fromCharCode(97 + (i + rotation) % 26);
+        obj.decodeMap[String.fromCharCode(97 + (i + rotation) % 26)] = String.fromCharCode(97 + i);
+      }
+
+      // (2) Write functions for
+      // (2.1) encode
+      obj.encode = function (str) {
+        // YOU DO THIS PART
+        let xs = str.split('').map((char) => {
+          return (char in obj.encodeMap) ? obj.encodeMap[char] : char;
+        })
+        return xs.join('')
+      };
+
+      // (2.2) decode
+      obj.decode = function (str) {
+        // YOU DO THIS PART
+        let xs = str.split('').map((char) => {
+          return (char in obj.encodeMap) ? obj.decodeMap[char] : char;
+        })
+        return xs.join('')
+      };
+
+      return obj;
+    }
+
+    // TODO #2:
+    // Test 1:
+    // Write your test here
+    let cipher5 = decoderRing(5);
+    console.assert(cipher5.encode("hello there") === "mjqqt ymjwj");
+    console.assert(cipher5.decode("mjqqtymjwj") === "hellothere");
+
+    // Test 2:
+    // Write your test here
+    let cipher25 = decoderRing(25);
+    console.assert(cipher25.encode("i love comp sci") === "h knud bnlo rbh");
+    console.assert(cipher25.decode("h knud bnlo rbh") === "i love comp sci");
+
+    // Test 3:
+    // Write your test here
+    let cipher15 = decoderRing(15);
+    console.assert(cipher15.encode("funny squid game") === "ujccn hfjxs vpbt");
+    console.assert(cipher15.decode("ujccn hfjxs vpbt") === "funny squid game")
+
+    // Pro Tip: View the output of your tests by opening up
+    // the console in your browser.
+  </script>
+</html>
